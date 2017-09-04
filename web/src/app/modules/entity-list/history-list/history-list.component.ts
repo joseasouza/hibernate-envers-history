@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {EntityService} from "../../../services/model/entity.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {History} from "../../../model/history";
+import {HttpErrorHandler} from "../../../services/http/httpErrorHandler.service";
 
 @Component({
   selector: 'app-history-list',
@@ -15,7 +16,8 @@ export class HistoryListComponent implements OnInit {
   histories : History[] = [];
 
   constructor(private router : ActivatedRoute,
-              private entityService : EntityService) { }
+              private entityService : EntityService,
+              private errorHandler : HttpErrorHandler) { }
 
   ngOnInit() {
     this.router.params.subscribe((params: Params) => {
@@ -26,6 +28,8 @@ export class HistoryListComponent implements OnInit {
         this.entitySelected = name;
         this.entityService.getHistories(this.entitySelected, this.idSelected).then(value => {
           this.histories = value;
+        }).catch(error => {
+          this.errorHandler.handle(error);
         });
 
       }

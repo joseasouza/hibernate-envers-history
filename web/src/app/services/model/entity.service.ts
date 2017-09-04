@@ -3,7 +3,7 @@ import {HttpService} from "../http/http.service";
 import {Register} from "../../model/Register";
 import {Entity} from "../../model/entity";
 import {History} from "../../model/history";
-import {reject} from "q";
+import {Message} from "../../model/Message";
 
 @Injectable()
 export class EntityService {
@@ -68,7 +68,7 @@ export class EntityService {
     });
   }
 
-  revertRecord(name, id, revision) : Promise<any> {
+  revertRecord(name, id, revision) : Promise<Message> {
     return new Promise((resolve, reject) => {
       this.httpService.post("/entities/revert/", JSON.stringify({ name, id, revision })).subscribe(
         value => {

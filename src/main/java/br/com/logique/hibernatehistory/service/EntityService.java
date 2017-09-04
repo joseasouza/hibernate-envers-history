@@ -1,20 +1,20 @@
 package br.com.logique.hibernatehistory.service;
 
-import br.com.logique.hibernatehistory.dto.Foo;
 import br.com.logique.hibernatehistory.dto.Entity;
+import br.com.logique.hibernatehistory.dto.Foo;
 import br.com.logique.hibernatehistory.dto.History;
+import br.com.logique.hibernatehistory.dto.Message;
 import br.com.logique.hibernatehistory.dto.Register;
 import br.com.logique.hibernatehistory.dto.RevertInformation;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
@@ -118,11 +118,13 @@ public class EntityService {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/revert")
     public Response revertEntityAtRev(RevertInformation revertInformation) {
-        JsonObject jsonObj = new JsonObject();
-        jsonObj.addProperty("message", "Entity was succesfully reverted!");
-        return Response.ok(
-                jsonObj.toString()
-        ).build();
+
+        Message message = Message.builder().code(HttpServletResponse.SC_OK)
+                .message(String.format("Entity was succesfully reverted to revision %s!",
+                        revertInformation.getRevision().toString()))
+                .build();
+
+        return Response.ok(new Gson().toJsonTree(message).toString()).build();
     }
 
 }

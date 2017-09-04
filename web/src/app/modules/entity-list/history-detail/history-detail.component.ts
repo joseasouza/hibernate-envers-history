@@ -3,6 +3,8 @@ import {EntityService} from "../../../services/model/entity.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {History} from "../../../model/history";
 import {Location} from "@angular/common";
+import {NotifierService} from "../../../services/notificacao/notifier.service";
+import {HttpErrorHandler} from "../../../services/http/httpErrorHandler.service";
 
 @Component({
   selector: 'app-history-detail',
@@ -17,6 +19,8 @@ export class HistoryDetailComponent implements OnInit {
 
   constructor(private route : ActivatedRoute,
               private location : Location,
+              private notifier : NotifierService,
+              private errorHandler : HttpErrorHandler,
               private entityService : EntityService) { }
 
   ngOnInit() {
@@ -29,6 +33,8 @@ export class HistoryDetailComponent implements OnInit {
         this.selectedEntity = name;
         this.entityService.getHistory(name, id, revision).then(value => {
           this.history = value;
+        }).catch(error => {
+          this.errorHandler.handle(error);
         });
       }
     });
@@ -37,7 +43,10 @@ export class HistoryDetailComponent implements OnInit {
   revert() {
 
     this.entityService.revertRecord(this.selectedEntity, this.idSelected, this.history.revision).then(value => {
+      this.notifier.success(value.message, "Success!");
       this.location.back();
+    }).catch(error => {
+      this.errorHandler.handle(error);
     });
   }
 }

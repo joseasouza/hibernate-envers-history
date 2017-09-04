@@ -9,6 +9,7 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/finally";
 import {LoadingService} from "./loading.service";
 import {AppSettings} from "../../app.settings";
+import {Message} from "../../model/Message";
 
 
 @Injectable()
@@ -121,23 +122,29 @@ export class HttpService {
 
   private handleError(error: any) {
     console.error('error', error);
-
+    let messageError = new Message();
     if (error == null) {
-      console.error('Conexão com servidor foi perdida');
-    } else if (error.status == 401) {
-      console.error('Falha de autenticação: ');
-    } else if (error.status == 403) {
-      console.error('Acesso negado ao recurso solicitado: ');
-    } else if (error.status == 404) {
-      console.error('Página solicitada não encontrada: ' + error.statusText);
-    } else if (error.status == 500) {
-        console.error('Erro interno no servidor', + error);
-    } else if (error.status == 0) {
-      console.error('Sem comunicação com servidor');
+      console.error('Connection with the server was lost');
     } else {
-      console.error("Erro desconhecido aconteceu: " + error);
+      if (error.status == 401) {
+        console.error('No authentication ', error);
+      } else if (error.status == 403) {
+        console.error('Acces denied', error);
+      } else if (error.status == 404) {
+        console.error('Not found: ', error);
+      } else if (error.status == 500) {
+        console.error('Internal server error', error);
+      } else if (error.status == 0) {
+        console.error("Connection with the server was lost", error);
+      } else {
+        console.error("Unknown error: " + error);
+      }
+
+      messageError.code = error.status;
+      messageError.message = error.statusText;
+      messageError.body = error.json();
     }
 
-    return Observable.throw(error);
+    return Observable.throw(messageError);
   }
 }

@@ -10,6 +10,7 @@ import {BackButtonComponent} from "../../components/back-button/back-button.comp
 import {RevisionTypePipe} from "../../pipes/revision-type";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DataTablesModule} from "angular-datatables";
+import {NotifierService} from "../../services/notificacao/notifier.service";
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {DataTablesModule} from "angular-datatables";
     NgbModule,
     DataTablesModule
   ],
+  providers : [NotifierService],
   declarations: [ListComponent, BackButtonComponent, HistoryListComponent, HistoryDetailComponent,
     KeysPipe, RevisionTypePipe, RegisterDetailComponent]
 })

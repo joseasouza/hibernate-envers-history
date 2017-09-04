@@ -5,6 +5,8 @@
 
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
+import {NotifierService} from "../notificacao/notifier.service";
+import {Message} from "../../model/Message";
 
 /**
  * Serviço responsável por tratar os erros mais comuns que vem de {@link HttpService}
@@ -12,30 +14,32 @@ import {Router} from "@angular/router";
 @Injectable()
 export class HttpErrorHandler {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router, private notifier : NotifierService) { }
 
-  handle(mensagemErro : Object) {
-    console.debug('mensagemErro', mensagemErro);
-    // switch (mensagemErro.status) {
-    //   case 0:
-    //     // this.notificador.error(mensagemErro.notificacoes.join(", "), "Sem comunicação com o servidor! ");
-    //     break;
-    //   case 500:
-    //     // this.notificador.error(mensagemErro.notificacoes.join(", "), "Erro no servidor!");
-    //     break;
-    //   case 401:
-    //     // this.usuarioLogadoService.setLogado(null);
-    //     // this.router.navigate(["login"]);
-    //     // this.notificador.atencao(mensagemErro.notificacoes.join(", "), "Falha de Autorização! ");
-    //     break;
-    //
-    //   case 403:
-    //     // this.notificador.atencao(mensagemErro.notificacoes.join(", "), "Acesso Negado! ");
-    //     break;
-    //   default:
-    //     // this.notificador.error(mensagemErro.notificacoes.join(", "), "Falha na operação! ");
-    //
-    // }
+  handle(error : Message) {
+    console.debug('error', error);
+    if (error.code != null) {
+      switch (error.code) {
+        case 0:
+          this.notifier.error(error.message, "We lost communication with the server!");
+          break;
+        case 500:
+          this.notifier.error(error.message, "Internal Server Error!");
+          break;
+        case 401:
+          // this.usuarioLogadoService.setLogado(null);
+          // this.router.navigate(["login"]);
+          this.notifier.warn(error.message, "We must be logged in to coninue!");
+          break;
+
+        case 403:
+          this.notifier.warn(error.message, "Access Denied!");
+          break;
+        default:
+        this.notifier.error(error.message, "Operation failed! ");
+
+      }
+    }
 
   }
 

@@ -11,7 +11,7 @@ import {EntityService} from "./services/model/entity.service";
 import {HttpErrorHandler} from "./services/http/httpErrorHandler.service";
 import {HttpModule} from "@angular/http";
 import {LoadingService} from "./services/http/loading.service";
-import { BackButtonComponent } from './components/back-button/back-button.component';
+import {NotifierService} from "./services/notificacao/notifier.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { BackButtonComponent } from './components/back-button/back-button.compon
     routing,
     RouterModule
   ],
-  providers: [HttpService, EntityService, HttpErrorHandler, LoadingService],
+  providers: [HttpService, EntityService, HttpErrorHandler, LoadingService, NotifierService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
