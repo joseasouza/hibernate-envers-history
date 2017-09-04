@@ -1,12 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+web/dist
+web/tmp
+web/out-tsc
 
 # dependencies
-/node_modules
+web/node_modules
 
 # IDEs and editors
 /.idea
@@ -35,8 +35,8 @@ testem.log
 yarn-error.log
 
 # e2e
-/e2e/*.js
-/e2e/*.map
+web/e2e/*.js
+web/e2e/*.map
 
 # System Files
 .DS_Store
