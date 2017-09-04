@@ -1,0 +1,53 @@
+
+<h3>Information of '{{selectedEntity}}' with id: {{idSelected}} at revision {{history.revision}}</h3>
+
+<p>
+  See below information about the selected history
+</p>
+
+<div class="row">
+  <div class="col-md-12">
+      <b>Revision Type:</b> {{history.revisionType | revisionType}}
+  </div>
+
+  <div class="col-md-12">
+    <b>Modification Date: </b>{{history.date| date : "MM-dd-yyyy hh:mm:ss"}}
+  </div>
+</div>
+
+<div class="row">
+  <table class="table table-striped mt-5">
+    <tr *ngFor="let key of history.object | keys">
+      <td>{{key}}</td>
+      <td>{{history.object[key]}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="row">
+  <back-button></back-button>
+  <a href="javascript:void(0)" class="btn btn-danger ml-1" data-toggle="modal" data-target="#confirmModal">
+    <i class="fa fa-repeat"></i> Revert
+  </a>
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirm Revert</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>The record will be reverted to revision {{history.revision}}.
+          <br/>Do you want to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-secondary" data-dismiss="modal">Close</a>
+        <a href="javascript:void(0)" class="btn btn-primary" data-dismiss="modal" (click)="revert()">Confirm Revert</a>
+      </div>
+    </div>
+  </div>
+</div>

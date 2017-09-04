@@ -1,0 +1,31 @@
+<h2>Showing History of '{{entitySelected}}' with id: {{idSelected}}</h2>
+<p>
+  Select a history below to see more details
+</p>
+
+<h4 *ngIf="histories.length == 0" class="text-center no-entities">No Entities</h4>
+
+<div class="row" *ngIf="histories.length != 0">
+  <table class="table table-striped mt-5 table-select-register">
+    <thead>
+      <tr>
+        <th># Revision</th>
+        <th>Modification Date</th>
+        <th>Revision Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr [routerLink]="['/', entitySelected, idSelected, 'history', history.revision]" *ngFor="let history of histories">
+      <td>{{history.revision}}</td>
+      <td>{{history.date | date : "dd/MM/yyyy HH:mm:ss"}}</td>
+      <td>{{history.revisionType | revisionType}}</td>
+      <td>{{history.description}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <back-button></back-button>
+</div>

@@ -1,0 +1,22 @@
+<h3>Information of '{{selectedEntity}}' with id: {{register.id}}</h3>
+
+<p>
+  See below information about the selected register
+</p>
+
+<div class="row">
+  <table class="table table-striped mt-5">
+    <tr *ngFor="let key of register.object | keys">
+      <td>{{key}}</td>
+      <td>{{register.object[key]}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="row">
+    <back-button></back-button>
+
+    <a [routerLink]="['history']" href="javascript:void(0)" class="btn btn-primary ml-2">
+      <i class="fa fa-search"></i>
+      See History</a>
+</div>
