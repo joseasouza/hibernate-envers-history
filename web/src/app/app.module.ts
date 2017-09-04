@@ -12,12 +12,14 @@ import {HttpErrorHandler} from "./services/http/httpErrorHandler.service";
 import {HttpModule} from "@angular/http";
 import {LoadingService} from "./services/http/loading.service";
 import {NotifierService} from "./services/notificacao/notifier.service";
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuLeftComponent,
-    MenuTopComponent
+    MenuTopComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
