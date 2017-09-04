@@ -1,8 +1,10 @@
 <ul class="nav nav-pills flex-column">
   <li class="nav-item" *ngFor="let entity of entities">
+
     <a class="nav-link" [ngClass]="{'active' : entity.name == selectedEntity.name}"
        [routerLink]="['', entity.name]"
        (click)="selectEntity(entity)" >{{entity.name}}</a>
+
   </li>
   <li class="nav-item no-entity" *ngIf="entities.length == 0">No Entity Available</li>
 </ul>

@@ -8,11 +8,15 @@ import {RegisterDetailComponent} from "./register-detail/register-detail.compone
 import {KeysPipe} from "../../pipes/keys-pipe";
 import {BackButtonComponent} from "../../components/back-button/back-button.component";
 import {RevisionTypePipe} from "../../pipes/revision-type";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DataTablesModule} from "angular-datatables";
 
 @NgModule({
   imports: [
     CommonModule,
-    routing
+    routing,
+    NgbModule,
+    DataTablesModule
   ],
   declarations: [ListComponent, BackButtonComponent, HistoryListComponent, HistoryDetailComponent,
     KeysPipe, RevisionTypePipe, RegisterDetailComponent]

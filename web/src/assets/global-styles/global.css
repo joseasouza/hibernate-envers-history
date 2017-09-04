@@ -55,20 +55,6 @@ h1 {
   border-radius: 0;
 }
 
-/*
- * Dashboard
- */
-
-/* Placeholders */
-.placeholders {
-  padding-bottom: 3rem;
-}
-
-.placeholder img {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
 table.table-select-register tbody tr {
   transition: .2s ease;
   -webkit-transition: .2s ease;
@@ -83,4 +69,11 @@ table.table-select-register tbody tr:hover {
 .no-entities {
   color: #888;
   padding-top: 3em;
+}
+
+.dataTables_wrapper.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }

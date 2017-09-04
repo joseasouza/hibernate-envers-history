@@ -11,11 +11,11 @@
   </div>
 
   <div class="col-md-12">
-    <b>Modification Date: </b>{{history.date| date : "MM-dd-yyyy hh:mm:ss"}}
+    <b>Modification Date: </b>{{history.date| date : "MM-dd-yyyy HH:mm:ss"}}
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="history.object != null">
   <table class="table table-striped mt-5">
     <tr *ngFor="let key of history.object | keys">
       <td>{{key}}</td>
@@ -24,7 +24,7 @@
   </table>
 </div>
 
-<div class="row">
+<div class="row mt-5">
   <back-button></back-button>
   <a href="javascript:void(0)" class="btn btn-danger ml-1" data-toggle="modal" data-target="#confirmModal">
     <i class="fa fa-repeat"></i> Revert

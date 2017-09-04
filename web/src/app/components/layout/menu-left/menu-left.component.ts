@@ -29,7 +29,7 @@ export class MenuLeftComponent implements OnInit {
 
   list() {
     this.entityService.listEntities().then(data => {
-      this.entities = <Entity[]> data;
+      this.entities = data;
       if (this.entities.length > 0) {
         this.selectedEntity = this.entities[0];
         this.router.navigate(['/', this.selectedEntity.name]);

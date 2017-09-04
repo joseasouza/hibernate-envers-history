@@ -19,7 +19,7 @@ export class HttpService {
   cabecalhoAlterado = false;
 
   constructor(private http: Http, private loading : LoadingService) {
-    this.headers = new Headers({'Content-Type': 'application/json',});
+    this.headers = new Headers({'Content-Type': 'application/json', 'Accept' : "application/json"});
     this.options = new RequestOptions({headers: this.headers, withCredentials: true});
   }
 

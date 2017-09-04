@@ -7,6 +7,6 @@
 
 export const environment = {
   production: false,
-  host: "http://" + window.location.hostname + ":8888",
-  contexto: "appggas"
+  host : "http://" + window.location.hostname + ":8080",
+  contexto : "audit"
 };

@@ -22,7 +22,7 @@ export class RegisterDetailComponent implements OnInit {
       this.selectedEntity = params['name'];
       this.idSelected  = params['id'];
       if (this.selectedEntity != null && this.idSelected != null) {
-        this.entityService.getRegister(name, this.idSelected).then(value => {
+        this.entityService.getRegister(this.selectedEntity, this.idSelected).then(value => {
           this.register = value;
         });
 
