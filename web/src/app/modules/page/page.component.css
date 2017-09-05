@@ -1,0 +1,8 @@
+nav.navbar {
+  background-color: #1fb5ad;
+}
+
+main.content {
+  padding: calc(2rem + 50px) 2rem 2rem;
+}
+

@@ -9,8 +9,19 @@
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
       <param-name>jersey.config.server.provider.packages</param-name>
-      <param-value>br.com.logique.hibernatehistory.service</param-value>
+      <param-value>br.com.logique.hibernatehistory</param-value>
     </init-param>
+
+    <init-param>
+      <param-name>hibernate.envers.history.username</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>hibernate.envers.history.password</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+
+
     <load-on-startup>1</load-on-startup>
   </servlet>
 

@@ -12,22 +12,30 @@ import {HttpErrorHandler} from "./services/http/httpErrorHandler.service";
 import {HttpModule} from "@angular/http";
 import {LoadingService} from "./services/http/loading.service";
 import {NotifierService} from "./services/notificacao/notifier.service";
-import { LoginComponent } from './components/login/login.component';
+import {LoginComponent} from "./components/login/login.component";
+import {GuardService} from "./services/guard/guard.service";
+import {PageComponent} from "./modules/page/page.component";
+import {LoggedUserService} from "./services/logged-user/logged-user.service";
+import {LoginService} from "./services/login/login.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuLeftComponent,
     MenuTopComponent,
-    LoginComponent
+    LoginComponent,
+    PageComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     routing,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
-  providers: [HttpService, EntityService, HttpErrorHandler, LoadingService, NotifierService],
+  providers: [HttpService, EntityService, HttpErrorHandler, LoadingService, NotifierService, LoggedUserService, GuardService,
+    LoggedUserService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

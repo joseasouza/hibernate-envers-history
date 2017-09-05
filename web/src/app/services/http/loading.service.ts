@@ -10,17 +10,17 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class LoadingService {
 
-  carregando: boolean = false;
+  isWorking: boolean = false;
 
   constructor() { }
 
-  exibir() {
-    this.carregando = true;
+  show() {
+    this.isWorking = true;
     // NProgress.start();
   }
 
-  parar() {
-    this.carregando = false;
+  stop() {
+    this.isWorking = false;
     // NProgress.done();
   }
 

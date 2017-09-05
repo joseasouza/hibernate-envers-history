@@ -26,22 +26,22 @@ export class HttpService {
 
   post(url: string, parametros ?: any) {
     this.gerarCabecalho();
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .post(AppSettings.API_ENDPOINT + url, parametros, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => this.loading.parar());
+      .finally(() => this.loading.stop());
   }
 
   get(url: string) {
     this.gerarCabecalho();
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .get(AppSettings.API_ENDPOINT + url, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => {this.loading.parar();});
+      .finally(() => {this.loading.stop();});
   }
 
   getBackground(url: string) {
@@ -54,22 +54,22 @@ export class HttpService {
 
   put(url: string, parametros ?: any) {
     this.gerarCabecalho();
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .put(AppSettings.API_ENDPOINT + url, parametros, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => this.loading.parar());
+      .finally(() => this.loading.stop());
   }
 
   delete(url: string) {
     this.gerarCabecalho();
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .delete(AppSettings.API_ENDPOINT + url, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => this.loading.parar());
+      .finally(() => this.loading.stop());
   }
 
   postUpload(url: string, formData: FormData) {
@@ -79,12 +79,12 @@ export class HttpService {
     this.headers.append('Accept', 'application/json');
     this.options = new RequestOptions({headers: this.headers});
 
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .post(AppSettings.API_ENDPOINT + url, formData, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => this.loading.parar());
+      .finally(() => this.loading.stop());
   }
 
   putUpload(url: string, formData: FormData) {
@@ -94,12 +94,12 @@ export class HttpService {
     this.headers.append('Accept', 'application/json');
     this.options = new RequestOptions({headers: this.headers});
 
-    this.loading.exibir();
+    this.loading.show();
     return this.http
       .put(AppSettings.API_ENDPOINT + url, formData, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => this.loading.parar());
+      .finally(() => this.loading.stop());
   }
 
   private gerarCabecalho() {
@@ -140,9 +140,12 @@ export class HttpService {
         console.error("Unknown error: " + error);
       }
 
-      messageError.code = error.status;
-      messageError.message = error.statusText;
-      messageError.body = error.json();
+      try {
+        messageError = error.json();
+      } catch (fail) {
+        messageError.code = error.status;
+      }
+
     }
 
     return Observable.throw(messageError);

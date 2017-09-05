@@ -7,11 +7,11 @@ declare var jQuery: any;
 export class NotifierService {
 
   info(message: string, title ?: string) {
-    this.exibirMensagem(message, title, 'warning');
+    this.exibirMensagem(message, title, 'primary');
   }
 
   warn(message: string, title ?: string) {
-    this.exibirMensagem(message, title, 'primary');
+    this.exibirMensagem(message, title, 'warning');
   }
 
   error(message: string, title ?: string) {

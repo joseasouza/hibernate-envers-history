@@ -7,6 +7,7 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {NotifierService} from "../notificacao/notifier.service";
 import {Message} from "../../model/Message";
+import {LoggedUserService} from "../logged-user/logged-user.service";
 
 /**
  * Serviço responsável por tratar os erros mais comuns que vem de {@link HttpService}
@@ -14,7 +15,8 @@ import {Message} from "../../model/Message";
 @Injectable()
 export class HttpErrorHandler {
 
-  constructor(private router : Router, private notifier : NotifierService) { }
+  constructor(private router : Router, private notifier : NotifierService,
+              private loggedUserService : LoggedUserService) { }
 
   handle(error : Message) {
     console.debug('error', error);
@@ -27,9 +29,9 @@ export class HttpErrorHandler {
           this.notifier.error(error.message, "Internal Server Error!");
           break;
         case 401:
-          // this.usuarioLogadoService.setLogado(null);
-          // this.router.navigate(["login"]);
-          this.notifier.warn(error.message, "We must be logged in to coninue!");
+          this.loggedUserService.setLogged(false);
+          this.router.navigate(["login"]);
+          this.notifier.warn(error.message, "You must be logged in to continue!");
           break;
 
         case 403:

@@ -1,0 +1,11 @@
+.logout {
+  color: rgba(255, 255, 255, 0.5);
+  right: 10px;
+  position: absolute;
+  top: 15px;
+}
+
+.logout:hover {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
