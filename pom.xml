@@ -6,6 +6,10 @@
   <packaging>war</packaging>
   <version>1.0.0-SNAPSHOT</version>
 
+  <properties>
+    <skip.frontend.compile>false</skip.frontend.compile>
+  </properties>
+
   <dependencies>
 
     <dependency>
@@ -88,6 +92,65 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>20020829</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>1</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                         classpathref="maven.plugin.classpath" />
+                <if>
+                  <equals arg1="${skip.frontend.compile}" arg2="false" />
+                  <then>
+                    <delete>
+                      <fileset dir="${basedir}/src/main/resources/source" >
+                        <include name="**"/>
+                        <exclude name="index.html"/>
+
+                      </fileset>
+                    </delete>
+                    <exec dir="${basedir}/web/" executable="npm" os="Linux">
+                      <arg line="install"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="ng" os="Linux">
+                      <arg line="build --prod"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
+                      <arg line="/c npm install"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
+                      <arg line="/c ng build --prod"/>
+                    </exec>
+
+                    <copy todir="${basedir}/src/main/resources/source/">
+                      <fileset dir="${basedir}/web/dist/">
+                        <include name="**" />
+                      </fileset>
+                    </copy>
+                  </then>
+                </if>
+
+
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 </project>

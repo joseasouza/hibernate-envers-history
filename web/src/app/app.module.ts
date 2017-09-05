@@ -18,6 +18,8 @@ import {PageComponent} from "./modules/page/page.component";
 import {LoggedUserService} from "./services/logged-user/logged-user.service";
 import {LoginService} from "./services/login/login.service";
 import {FormsModule} from "@angular/forms";
+import {AppSettings} from "./app.settings";
+import {APP_BASE_HREF} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule
   ],
   providers: [HttpService, EntityService, HttpErrorHandler, LoadingService, NotifierService, LoggedUserService, GuardService,
-    LoggedUserService, LoginService],
+    LoggedUserService, LoginService, AppSettings],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

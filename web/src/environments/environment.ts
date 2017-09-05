@@ -7,6 +7,5 @@
 
 export const environment = {
   production: false,
-  host : "http://" + window.location.hostname + ":8080",
-  contexto : "audit"
+  origin: "http://localhost:8080/audit"
 };

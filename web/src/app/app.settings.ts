@@ -1,14 +1,27 @@
+import {Injectable} from "@angular/core";
 import {environment} from "../environments/environment";
+
+@Injectable()
 export class AppSettings {
 
-  static obterEnderecoHost() {
-    if (environment.host) {
-      return environment.host;
-    } else {
-      return  window.location.protocol + "//" + window.location.host;
-    }
-  }
+  getApiEndPoint() {
 
-  public static API_ENDPOINT = AppSettings.obterEnderecoHost() + "/" + environment.contexto;
+    let endpoint = "";
+    let baseHref = document.getElementsByTagName('base')[0].href;
+    console.info("baseHref", baseHref);
+
+    if (environment.production) {
+       endpoint = baseHref;
+
+    } else {
+      endpoint = environment.origin;
+    }
+
+    while (endpoint.endsWith("/") && endpoint.length > 1) {
+      endpoint = endpoint.substring(0, endpoint.length - 1);
+    }
+
+    return endpoint;
+  }
 
 }

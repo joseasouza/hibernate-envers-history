@@ -41,6 +41,8 @@ export class HttpErrorHandler {
         this.notifier.error(error.message, "Operation failed! ");
 
       }
+    } else {
+      this.notifier.error("We lost communication with the server!");
     }
 
   }

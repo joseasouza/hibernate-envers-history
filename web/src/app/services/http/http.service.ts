@@ -17,63 +17,64 @@ export class HttpService {
 
   headers: Headers;
   options: RequestOptions;
-  cabecalhoAlterado = false;
+  headerChanged = false;
 
-  constructor(private http: Http, private loading : LoadingService) {
+  constructor(private http: Http, private loading : LoadingService,
+              private settings : AppSettings) {
     this.headers = new Headers({'Content-Type': 'application/json', 'Accept' : "application/json"});
     this.options = new RequestOptions({headers: this.headers, withCredentials: true});
   }
 
   post(url: string, parametros ?: any) {
-    this.gerarCabecalho();
+    this.generateHeader();
     this.loading.show();
     return this.http
-      .post(AppSettings.API_ENDPOINT + url, parametros, this.options)
+      .post(this.settings.getApiEndPoint() + url, parametros, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 
   get(url: string) {
-    this.gerarCabecalho();
+    this.generateHeader();
     this.loading.show();
     return this.http
-      .get(AppSettings.API_ENDPOINT + url, this.options)
+      .get(this.settings.getApiEndPoint() + url, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => {this.loading.stop();});
   }
 
   getBackground(url: string) {
-    this.gerarCabecalho();
+    this.generateHeader();
     return this.http
-      .get(AppSettings.API_ENDPOINT + url, this.options)
+      .get(this.settings.getApiEndPoint() + url, this.options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   put(url: string, parametros ?: any) {
-    this.gerarCabecalho();
+    this.generateHeader();
     this.loading.show();
     return this.http
-      .put(AppSettings.API_ENDPOINT + url, parametros, this.options)
+      .put(this.settings.getApiEndPoint() + url, parametros, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 
   delete(url: string) {
-    this.gerarCabecalho();
+    this.generateHeader();
     this.loading.show();
     return this.http
-      .delete(AppSettings.API_ENDPOINT + url, this.options)
+      .delete(this.settings.getApiEndPoint() + url, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 
   postUpload(url: string, formData: FormData) {
-    this.cabecalhoAlterado = true;
+    this.headerChanged = true;
 
     this.headers = new Headers();
     this.headers.append('Accept', 'application/json');
@@ -81,14 +82,14 @@ export class HttpService {
 
     this.loading.show();
     return this.http
-      .post(AppSettings.API_ENDPOINT + url, formData, this.options)
+      .post(this.settings.getApiEndPoint() + url, formData, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 
   putUpload(url: string, formData: FormData) {
-    this.cabecalhoAlterado = true;
+    this.headerChanged = true;
 
     this.headers = new Headers();
     this.headers.append('Accept', 'application/json');
@@ -96,14 +97,14 @@ export class HttpService {
 
     this.loading.show();
     return this.http
-      .put(AppSettings.API_ENDPOINT + url, formData, this.options)
+      .put(this.settings.getApiEndPoint() + url, formData, this.options)
       .map(this.extractData)
       .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 
-  private gerarCabecalho() {
-    if (this.cabecalhoAlterado) {
+  private generateHeader() {
+    if (this.headerChanged) {
       this.headers = new Headers({
         'Content-Type': 'application/json',
       });
