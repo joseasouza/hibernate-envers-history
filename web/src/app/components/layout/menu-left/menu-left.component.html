@@ -1,4 +1,4 @@
-<ul class="nav nav-pills flex-column">
+<ul class="nav nav-pills flex-column" *ngIf="!isWorking">
   <li class="nav-item" *ngFor="let entity of entities">
 
     <a class="nav-link" [ngClass]="{'active' : entity.name == selectedEntity.name}"
@@ -8,3 +8,8 @@
   </li>
   <li class="nav-item no-entity" *ngIf="entities.length == 0">No Entity Available</li>
 </ul>
+<div *ngIf="isWorking">
+  <i class="fa loading-left fa-spinner fa-pulse fa-4x fa-fw"></i>
+</div>
+
+

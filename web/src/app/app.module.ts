@@ -19,15 +19,16 @@ import {LoggedUserService} from "./services/logged-user/logged-user.service";
 import {LoginService} from "./services/login/login.service";
 import {FormsModule} from "@angular/forms";
 import {AppSettings} from "./app.settings";
-import {APP_BASE_HREF} from "@angular/common";
+import {LoadingComponent} from "./components/loading/loading.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuLeftComponent,
     MenuTopComponent,
+    LoadingComponent,
     LoginComponent,
-    PageComponent
+    PageComponent,
   ],
   imports: [
     BrowserModule,

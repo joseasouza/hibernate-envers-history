@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Register} from "../../../model/Register";
 import {EntityService} from "../../../services/model/entity.service";
 import {HttpErrorHandler} from "../../../services/http/httpErrorHandler.service";
+import {Subject} from "rxjs/Subject";
+import {DataTableDirective} from "angular-datatables";
 
 @Component({
   selector: 'app-list',
@@ -14,6 +16,11 @@ export class ListComponent implements OnInit {
   entitySelected = "No Entity Selected";
   registers: Register[] = [];
 
+  dtTrigger = new Subject();
+
+  @ViewChild(DataTableDirective)
+  private dtElement : DataTableDirective;
+
 
   constructor(private router : ActivatedRoute,
               private entityService : EntityService,
@@ -22,11 +29,26 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.router.params.subscribe((params: Params) => {
       let name = params['name'];
+
       if (name != null) {
         this.entitySelected = name;
-
         this.entityService.getRegisters(this.entitySelected).then(value => {
           this.registers = value;
+
+          if (this.dtElement && this.dtElement.dtInstance) {
+            this.dtElement.dtInstance.then((instance) => {
+              instance.destroy();
+              this.registers = value;
+              this.dtTrigger.next();
+            });
+
+          } else {
+            setTimeout(() => {
+              this.registers = value;
+              this.dtTrigger.next();
+            });
+          }
+
         }).catch(error => {
           this.errorHandler.handle(error);
         });

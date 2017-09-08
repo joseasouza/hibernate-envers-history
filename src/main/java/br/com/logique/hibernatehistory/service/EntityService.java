@@ -1,12 +1,12 @@
 package br.com.logique.hibernatehistory.service;
 
-import br.com.logique.hibernatehistory.dto.Entity;
-import br.com.logique.hibernatehistory.dto.Foo;
+import br.com.logique.hibernatehistory.business.AuditManager;
 import br.com.logique.hibernatehistory.dto.History;
 import br.com.logique.hibernatehistory.dto.Message;
 import br.com.logique.hibernatehistory.dto.Register;
 import br.com.logique.hibernatehistory.dto.RevertInformation;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -17,84 +17,139 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author victor.
  */
 @Path("/entities")
+@Slf4j
 public class EntityService {
+
+    private AuditManager manager;
+
+    public EntityService() {
+        this.manager = new AuditManager();
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEntities() {
+        log.debug("Fetching all entities");
 
-        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+        return Response.ok(new Gson().toJsonTree(
+                manager.getNomesClassesAuditadas()
+        ).toString()).build();
 
-                Entity.builder().name("AnaliseAlarmesAnunciadosPorTempo").build(),
-                Entity.builder().name("Dashboars").build()
-
-        )).toString()).build();
+//        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+//
+//                Entity.builder().name("AnaliseAlarmesAnunciadosPorTempo").build(),
+//                Entity.builder().name("Dashboars").build()
+//
+//        )).toString()).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/registers/{name}")
     public Response getRegisters(@PathParam("name") String name) {
-        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+        log.debug("Requested entity: {}", name);
 
-                Register.builder().id(1L)
-                        .description("ANAL_DS_NOME: " + name + " 1, ANAL_DS_DESCRICAO: Descricao")
-                        .build(),
+//        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+//
+//                Register.builder().id(1L)
+//                        .description("ANAL_DS_NOME: " + name + " 1, ANAL_DS_DESCRICAO: Descricao")
+//                        .build(),
+//
+//                Register.builder().id(2L)
+//                        .description("ANAL_DS_NOME: " + name + " 2, ANAL_DS_DESCRICAO: Descricao 2")
+//                        .build()
+//
+//        )).toString()).build();
 
-                Register.builder().id(2L)
-                        .description("ANAL_DS_NOME: " + name + " 2, ANAL_DS_DESCRICAO: Descricao 2")
-                        .build()
 
-        )).toString()).build();
+        Response response;
+        try {
+            List<Register> all = manager.todos(name);
+            response = Response.ok(new Gson().toJsonTree(all).toString()).build();
+
+        } catch (Exception e) {
+            response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                    .message(e.getMessage())
+                    .build()).build();
+        }
+        return response;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/registers/{name}/{id}")
     public Response getRegisters(@PathParam("name") String name, @PathParam("id") Long id) {
-        return Response.ok(new Gson().toJsonTree(
+        log.debug("Requested entity: {} for id {}", name, id);
 
-                Register.builder().id(id)
-                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao")
-                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(2d).build())
-                        .build()
+//        return Response.ok(new Gson().toJsonTree(
+//
+//                Register.builder().id(id)
+//                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao")
+//                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(2d).build())
+//                        .build()
+//
+//        ).toString()).build();
 
-        ).toString()).build();
+        Response response;
+        try {
+
+            Register register = manager.findById(name, id);
+            response = Response.ok(new Gson().toJsonTree(register).toString()).build();
+
+        } catch (Exception e) {
+            response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                    .message(e.getMessage())
+                    .build()).build();
+        }
+        return response;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/history/{name}/{id}")
     public Response getHistories(@PathParam("name") String name, @PathParam("id") Long id) {
-        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+        log.debug("Fetching histories for entity {} with id {}", name, id);
 
-                History.builder().revision(1L).revisionType(0)
-                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
-                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao")
-                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(1d).build())
-                        .build(),
+//        return Response.ok(new Gson().toJsonTree(Arrays.asList(
+//
+//                History.builder().revision(1L).revisionType(0)
+//                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
+//                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao")
+//                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(1d).build())
+//                        .build(),
+//
+//                History.builder().revision(2L).revisionType(1)
+//                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
+//                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao 2")
+//                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(2d).build())
+//                        .build(),
+//
+//                History.builder().revision(3L).revisionType(2)
+//                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
+//                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao 3")
+//                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(3d).build())
+//                        .build()
+//
+//        )).toString()).build();
 
-                History.builder().revision(2L).revisionType(1)
-                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
-                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao 2")
-                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(2d).build())
-                        .build(),
+        Response response;
+        try {
 
-                History.builder().revision(3L).revisionType(2)
-                        .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
-                        .description("ANAL_DS_NOME: " + name + " " + id + ", ANAL_DS_DESCRICAO: Descricao 3")
-                        .object(Foo.builder().id(id).nome(name + " " + id).quantidade(3d).build())
-                        .build()
+            List<History> obj = manager.listarRevisoesDaEntidade(name, id);
+            response = Response.ok(new Gson().toJsonTree(obj).toString()).build();
 
-        )).toString()).build();
+        } catch (Exception e) {
+            response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                    .message(e.getMessage())
+                    .build()).build();
+        }
+        return response;
     }
 
     @GET
@@ -102,7 +157,8 @@ public class EntityService {
     @Path("/history/{name}/{id}/{revision}")
     public Response getHistoryAtRev(@PathParam("name") String name,
                                          @PathParam("id") Long id, @PathParam("revision") Long revision) {
-        return Response.ok(new Gson().toJsonTree(
+        log.debug("Fetching history of entity with id {} at revision {}", name, id, revision);
+ /*       return Response.ok(new Gson().toJsonTree(
 
                 History.builder().revision(revision).revisionType(0)
                         .date(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss")))
@@ -110,7 +166,21 @@ public class EntityService {
                         .object(Foo.builder().id(id).nome(name + " " + id).quantidade(1d).build())
                         .build()
 
-        ).toString()).build();
+        ).toString()).build();*/
+
+        Response response;
+        try {
+
+            History history = manager.buscarEntidadePorRevisao(name, id, revision);
+            response = Response.ok(new Gson().toJsonTree(history).toString()).build();
+
+        } catch (Exception e) {
+            response = Response.serverError().entity(
+                    new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                            .message(e.getMessage()).build()).toString())
+                    .build();
+        }
+        return response;
     }
 
     @POST
@@ -118,13 +188,30 @@ public class EntityService {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/revert")
     public Response revertEntityAtRev(RevertInformation revertInformation) {
+        log.debug("Reverting entity for: {}", revertInformation);
 
-        Message message = Message.builder().code(HttpServletResponse.SC_OK)
-                .message(String.format("Entity was succesfully reverted to revision %s!",
-                        revertInformation.getRevision().toString()))
-                .build();
+//        Message message = Message.builder().code(HttpServletResponse.SC_OK)
+//                .message(String.format("Entity was succesfully reverted to revision %s!",
+//                        revertInformation.getRevision().toString()))
+//                .build();
+//
+//        return Response.ok(new Gson().toJsonTree(message).toString()).build();
 
-        return Response.ok(new Gson().toJsonTree(message).toString()).build();
+        Response response;
+        try {
+
+            manager.reverter(revertInformation.getName(), revertInformation.getId(), revertInformation.getRevision());
+            response = Response.ok(new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_OK)
+                    .message(String.format("Entity was succesfully reverted to revision %s!", revertInformation.getRevision().toString()))
+                    .build()).toString()).build();
+
+        } catch (Exception e) {
+            response = Response.serverError().entity(
+                    new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+                            .message(e.getMessage()).build()).toString())
+                    .build();
+        }
+        return response;
     }
 
 }

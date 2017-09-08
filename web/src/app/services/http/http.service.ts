@@ -42,64 +42,6 @@ export class HttpService {
       .get(this.settings.getApiEndPoint() + url, this.options)
       .map(this.extractData)
       .catch(this.handleError)
-      .finally(() => {this.loading.stop();});
-  }
-
-  getBackground(url: string) {
-    this.generateHeader();
-    return this.http
-      .get(this.settings.getApiEndPoint() + url, this.options)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-
-  put(url: string, parametros ?: any) {
-    this.generateHeader();
-    this.loading.show();
-    return this.http
-      .put(this.settings.getApiEndPoint() + url, parametros, this.options)
-      .map(this.extractData)
-      .catch(this.handleError)
-      .finally(() => this.loading.stop());
-  }
-
-  delete(url: string) {
-    this.generateHeader();
-    this.loading.show();
-    return this.http
-      .delete(this.settings.getApiEndPoint() + url, this.options)
-      .map(this.extractData)
-      .catch(this.handleError)
-      .finally(() => this.loading.stop());
-  }
-
-  postUpload(url: string, formData: FormData) {
-    this.headerChanged = true;
-
-    this.headers = new Headers();
-    this.headers.append('Accept', 'application/json');
-    this.options = new RequestOptions({headers: this.headers});
-
-    this.loading.show();
-    return this.http
-      .post(this.settings.getApiEndPoint() + url, formData, this.options)
-      .map(this.extractData)
-      .catch(this.handleError)
-      .finally(() => this.loading.stop());
-  }
-
-  putUpload(url: string, formData: FormData) {
-    this.headerChanged = true;
-
-    this.headers = new Headers();
-    this.headers.append('Accept', 'application/json');
-    this.options = new RequestOptions({headers: this.headers});
-
-    this.loading.show();
-    return this.http
-      .put(this.settings.getApiEndPoint() + url, formData, this.options)
-      .map(this.extractData)
-      .catch(this.handleError)
       .finally(() => this.loading.stop());
   }
 

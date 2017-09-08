@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {LoadingService} from "../../services/http/loading.service";
 
 @Component({
-  selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  selector: 'loading',
+  templateUrl: './loading.component.html',
+  styleUrls: ['./loading.component.css']
 })
-export class PageComponent implements OnInit {
+export class LoadingComponent implements OnInit {
 
   constructor(public loading : LoadingService) { }
 

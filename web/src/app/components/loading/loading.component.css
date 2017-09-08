@@ -1,0 +1,11 @@
+.loading {
+  position: fixed;
+  top: 50%;
+  left: calc(50% + 60px);
+  color: #999;
+}
+
+.no-entity {
+  color: #999;
+  text-align: center;
+}

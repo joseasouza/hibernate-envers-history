@@ -6,3 +6,7 @@ main.content {
   padding: calc(2rem + 50px) 2rem 2rem;
 }
 
+main.hide {
+  display: none;
+}
+

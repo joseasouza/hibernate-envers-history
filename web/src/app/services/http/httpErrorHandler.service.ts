@@ -42,7 +42,7 @@ export class HttpErrorHandler {
 
       }
     } else {
-      this.notifier.error("We lost communication with the server!");
+      this.notifier.error("Communication with the server was lost!");
     }
 
   }

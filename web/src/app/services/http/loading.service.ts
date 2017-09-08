@@ -16,12 +16,10 @@ export class LoadingService {
 
   show() {
     this.isWorking = true;
-    // NProgress.start();
   }
 
   stop() {
     this.isWorking = false;
-    // NProgress.done();
   }
 
 }

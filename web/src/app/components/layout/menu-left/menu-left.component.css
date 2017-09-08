@@ -11,3 +11,10 @@ li.no-entity {
   color: #999;
   text-align: center;
 }
+
+i.loading-left {
+  color: #999;
+  position: absolute;
+  bottom: 50%;
+  left: calc(50% - 42px);
+}
