@@ -1,5 +1,6 @@
 package br.com.logique.hibernatehistory.business;
 
+import br.com.logique.hibernatehistory.anotacao.EntityAudited;
 import br.com.logique.hibernatehistory.dao.AuditDao;
 import br.com.logique.hibernatehistory.dto.Entity;
 import br.com.logique.hibernatehistory.dto.History;
@@ -55,9 +56,10 @@ public class AuditManager {
     public List<Entity> getNomesClassesAuditadas() {
         List<Entity> classes = new ArrayList<>();
         allClasses.stream().forEach(aClass -> {
-            if (!Modifier.isAbstract(aClass.getModifiers())) {
-                classes.add(Entity.builder().name(aClass.getSimpleName()).build());
-            }
+            EntityAudited entityAudited = aClass.getAnnotation(EntityAudited.class);
+            classes.add(Entity.builder().
+                    name(aClass.getSimpleName()).
+                    displayName(entityAudited.display()).build());
         });
         classes.sort(Comparator.comparing(Entity::getName));
         return classes;
@@ -70,7 +72,7 @@ public class AuditManager {
     private void setClassesAuditadas() {
         Reflections reflections = new Reflections();
 
-        this.allClasses = reflections.getTypesAnnotatedWith(Audited.class);
+        this.allClasses = reflections.getTypesAnnotatedWith(EntityAudited.class);
     }
 
 }

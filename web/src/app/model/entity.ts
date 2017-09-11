@@ -3,4 +3,5 @@
  */
 export class Entity {
    name : String = "";
+   displayName: String = "";
 }

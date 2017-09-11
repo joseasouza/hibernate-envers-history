@@ -1,4 +1,4 @@
-import {RouterModule, Routes} from "@angular/router";
+  import {RouterModule, Routes} from "@angular/router";
 import {ListComponent} from "./list/list.component";
 import {HistoryListComponent} from "./history-list/history-list.component";
 import {HistoryDetailComponent} from "./history-detail/history-detail.component";

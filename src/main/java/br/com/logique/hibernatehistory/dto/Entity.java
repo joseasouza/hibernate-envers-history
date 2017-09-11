@@ -11,5 +11,6 @@ import lombok.Data;
 public class Entity {
 
     private String name;
+    private String displayName;
 
 }
