@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.Query;
 import javax.persistence.Version;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,18 @@ import java.util.Set;
  */
 @Slf4j
 public class AuditDao {
+
+    public Object findEntityAtRevision(Class<Object> clazz, Long id, Long revision) {
+        AuditReader reader = AuditReaderFactory.get(getEntityManager());
+        Object entity;
+        try {
+            entity =  reader.find(clazz, id, revision);
+        } catch (javax.persistence.NoResultException e) {
+            throw new GenericHibernateHistoryException(e);
+        }
+
+        return entity;
+    }
 
     public History findRevisionById(Class<Object> clazz, Long id, Long revisao) {
         AuditReader reader = AuditReaderFactory.get(getEntityManager());
@@ -112,7 +125,11 @@ public class AuditDao {
 
     public Object doRevert(Object entidade, Long id) {
         incrementVersionAttributeIfPresent(entidade, id);
-        getEntityManager().merge(entidade);
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(entidade);
+        entityManager.getTransaction().commit();
+        entityManager.close();
         return entidade;
     }
 
@@ -130,7 +147,7 @@ public class AuditDao {
         String description = getDescriptionFromGenericObject(objectBanco);
 
         return History.builder().
-                date(new Date((Long) objectColunas[INDICE_DATA]).toString()).
+                date(new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(new Date((Long) objectColunas[INDICE_DATA]))).
                 description(description).
                 revision(revisao).
                 revisionType(((RevisionType) objectColunas[INDICE_REVISAO_TYPE]).getRepresentation().intValue()).

@@ -74,6 +74,7 @@ public class EntityService {
             response = Response.ok(new Gson().toJsonTree(all).toString()).build();
 
         } catch (Exception e) {
+            log.error("Failed at getting information in HibernateEnvers: ", e);
             response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                     .message(e.getMessage())
                     .build()).build();
@@ -103,6 +104,7 @@ public class EntityService {
             response = Response.ok(new Gson().toJsonTree(register).toString()).build();
 
         } catch (Exception e) {
+            log.error("Failed at getting information in HibernateEnvers: ", e);
             response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                     .message(e.getMessage())
                     .build()).build();
@@ -145,6 +147,7 @@ public class EntityService {
             response = Response.ok(new Gson().toJsonTree(obj).toString()).build();
 
         } catch (Exception e) {
+            log.error("Failed at getting information in HibernateEnvers: ", e);
             response = Response.serverError().entity(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                     .message(e.getMessage())
                     .build()).build();
@@ -175,6 +178,7 @@ public class EntityService {
             response = Response.ok(new Gson().toJsonTree(history).toString()).build();
 
         } catch (Exception e) {
+            log.error("Failed at getting information in HibernateEnvers: ", e);
             response = Response.serverError().entity(
                     new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                             .message(e.getMessage()).build()).toString())
@@ -206,6 +210,7 @@ public class EntityService {
                     .build()).toString()).build();
 
         } catch (Exception e) {
+            log.error("Failed at getting information in HibernateEnvers: ", e);
             response = Response.serverError().entity(
                     new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
                             .message(e.getMessage()).build()).toString())

@@ -47,8 +47,8 @@ public class AuditManager {
     }
 
     public Object reverter(String clazz, Long id, Long revisao) throws ClassNotFoundException {
-        Object entidadeDB = this.auditoriaDao.findRevisionById(this.getClassForName(clazz), id, revisao);
-        Object entidade = this.auditoriaDao.doRevert(entidadeDB, id);
+        Object entityAtRev = this.auditoriaDao.findEntityAtRevision(this.getClassForName(clazz), id, revisao);
+        Object entidade = this.auditoriaDao.doRevert(entityAtRev, id);
         return entidade;
     }
 
