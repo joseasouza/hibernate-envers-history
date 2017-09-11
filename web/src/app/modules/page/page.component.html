@@ -1,8 +1,10 @@
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top">
-  <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse"
+          data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Hibernate Envers History</a>
+  <a class="navbar-brand" href="#">BR-AlarmExpert-v2 History</a>
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <app-menu-top></app-menu-top>
@@ -16,7 +18,7 @@
     </nav>
     <loading></loading>
     <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 content" [class.hide]="loading.isWorking">
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </main>
   </div>
 </div>
