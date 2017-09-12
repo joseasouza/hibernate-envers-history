@@ -12,6 +12,22 @@ any revision of your selected entity.
 
 The front end was developed with Angular and backend with Jax-rs with Jersey.
 
+Example: Showing all registers of entity Student:
+<h1 align="center">
+<a href="https://github.com/dudevictor/hibernate-envers-history"><img src="https://cdn.rawgit.com/dudevictor/hibernate-envers-history/master/media/registers.png" alt="Showing all registers of entity Student" ></a></h1>
+			
+Detailing selected register:			
+<h1 align="center">
+<a href="https://github.com/dudevictor/hibernate-envers-history">
+				<img src="https://cdn.rawgit.com/dudevictor/hibernate-envers-history/master/media/register.png" alt="Detailing selected register" >
+			</a></h1>
+			
+Reverting entity to revision 2
+<h1 align="center">
+<a href="https://github.com/dudevictor/hibernate-envers-history">
+				<img src="https://cdn.rawgit.com/dudevictor/hibernate-envers-history/master/media/revertExample.png" alt="Reverting entity to revision 2" >
+			</a></h1>
+
 ## Installation & Usage
 
 Put tthe following configuration on your web.xml:
