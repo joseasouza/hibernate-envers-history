@@ -3,8 +3,6 @@ package br.com.logique.hibernatehistory.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 /**
  * @author victor.
  */
@@ -16,6 +14,7 @@ public class History {
     private Integer revisionType;
     private String date;
     private String description;
+    private String author;
     private Object object;
 
 }

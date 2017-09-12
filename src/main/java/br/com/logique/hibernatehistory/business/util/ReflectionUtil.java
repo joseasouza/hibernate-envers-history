@@ -47,6 +47,13 @@ public final class ReflectionUtil {
         return filteredFields;
     }
 
+    /**
+     * Set a value on object passing the field
+     * @param field field to be setted
+     * @param o object
+     * @param value value of the object
+     * @throws GenericHibernateHistoryException throws if an illegal access occurs
+     */
     public static void setFieldValue(Field field, Object o, Object value) throws GenericHibernateHistoryException {
 
         field.setAccessible(true);
@@ -58,6 +65,13 @@ public final class ReflectionUtil {
         field.setAccessible(false);
     }
 
+    /**
+     * Get a value of a field
+     * @param field field to be get
+     * @param o object
+     * @return returns the value of the field
+     * @throws GenericHibernateHistoryException throws if an illegal access occurs
+     */
     public static Object getFieldValue(Field field, Object o) throws GenericHibernateHistoryException {
 
         field.setAccessible(true);
@@ -69,6 +83,21 @@ public final class ReflectionUtil {
         }
         field.setAccessible(false);
         return value;
+    }
+
+    /**
+     * Get a value of a field by passing its name
+     * @param name name of the field
+     * @param o object
+     * @return returns the value
+     */
+    public static Object getFieldValueByName(String name, Object o) {
+        try {
+            Field field = o.getClass().getDeclaredField(name);
+            return getFieldValue(field, o);
+        } catch (NoSuchFieldException e) {
+            throw new GenericHibernateHistoryException(e);
+        }
     }
 
 }

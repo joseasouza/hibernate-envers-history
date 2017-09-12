@@ -1,7 +1,7 @@
 package br.com.logique.hibernatehistory.business.util;
 
-import br.com.logique.hibernatehistory.anotacao.Columns;
-import br.com.logique.hibernatehistory.anotacao.EntityAudited;
+import br.com.logique.hibernatehistory.annotation.Columns;
+import br.com.logique.hibernatehistory.annotation.EntityAudited;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

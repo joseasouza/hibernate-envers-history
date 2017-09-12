@@ -1,4 +1,4 @@
-package br.com.logique.hibernatehistory.anotacao;
+package br.com.logique.hibernatehistory.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
