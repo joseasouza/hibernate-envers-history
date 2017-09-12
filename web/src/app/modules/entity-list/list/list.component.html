@@ -1,16 +1,16 @@
-<h2>Listing registers of '{{entitySelected}}'</h2>
+<h2>Listando registros de '{{entitySelected}}'</h2>
 <p>
-  Click on register to see more details
+  Clique em um dos registros para ver mais detalhes
 </p>
 
-<h4 *ngIf="registers.length == 0" class="text-center no-entities">No Entities</h4>
+<h4 *ngIf="registers.length == 0" class="text-center no-entities">Nenhum registro encontrado para esta entidade</h4>
 
 <div class="table-responsive mt-5" *ngIf="registers.length != 0">
   <table datatable class="table table-striped table-select-register" [dtTrigger]="dtTrigger" >
     <thead>
     <tr>
       <th>#</th>
-      <th>Description</th>
+      <th>Descrição</th>
     </tr>
     </thead>
     <tbody>

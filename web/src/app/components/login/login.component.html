@@ -7,26 +7,26 @@
       <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
       <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
       <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login()">
-        <h2 class="form-signin-heading">Hibernate Envers History</h2>
-        <h6 class="text-center">Please sign in</h6>
+        <h2 class="form-signin-heading">BR-AlarmExpert - Auditoria</h2>
+        <h6 class="text-center">Faça Login para continuar</h6>
 
         <div [hidden]="user.valid || user.pristine" class="alert alert-danger">
-          Username is required
+          O Nome de usuário é obrigatório
         </div>
 
         <div [hidden]="pass.valid || pass.pristine" class="alert alert-danger">
-          Password is required
+          A Senha é obrigatória
         </div>
 
-        <label for="username" class="sr-only">Username</label>
+        <label for="username" class="sr-only">Nome de Usuário</label>
         <input type="text" #user="ngModel" name="username" id="username" [(ngModel)]="username" class="form-control" placeholder="Username" required autofocus="">
 
 
 
-        <label for="password" class="sr-only">Password</label>
+        <label for="password" class="sr-only">Senha</label>
         <input #pass="ngModel" type="password" name="password" [(ngModel)]="password" id="password" class="form-control" placeholder="Password" required>
 
-        <button [disabled]="!loginForm.form.valid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button [disabled]="!loginForm.form.valid" class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
       </form>
     </div>
   </div>

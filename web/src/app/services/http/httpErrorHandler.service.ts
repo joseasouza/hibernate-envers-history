@@ -23,26 +23,26 @@ export class HttpErrorHandler {
     if (error.code != null) {
       switch (error.code) {
         case 0:
-          this.notifier.error(error.message, "We lost communication with the server!");
+          this.notifier.error(error.message, "Comunicação com o servidor foi perdida!");
           break;
         case 500:
-          this.notifier.error(error.message, "Internal Server Error!");
+          this.notifier.error(error.message, "Erro interno no sistema!");
           break;
         case 401:
           this.loggedUserService.setLogged(false);
           this.router.navigate(["login"]);
-          this.notifier.warn(error.message, "You must be logged in to continue!");
+          this.notifier.warn(error.message, "Você deve fazer login para continuar!");
           break;
 
         case 403:
-          this.notifier.warn(error.message, "Access Denied!");
+          this.notifier.warn(error.message, "Acesso negado!");
           break;
         default:
-        this.notifier.error(error.message, "Operation failed! ");
+        this.notifier.error(error.message, "Falha de Operação! ");
 
       }
     } else {
-      this.notifier.error("Communication with the server was lost!");
+      this.notifier.error("Comunicação com servidor foi perdida!");
     }
 
   }

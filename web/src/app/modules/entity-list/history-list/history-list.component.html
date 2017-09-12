@@ -1,18 +1,18 @@
-<h2>Showing History of '{{entitySelected}}' with id: {{idSelected}}</h2>
+<h2>Exibindo histórico da entidade '{{entitySelected}}' com id: {{idSelected}}</h2>
 <p>
-  Select a history below to see more details
+  Selecione um registro a seguir para visualizar mais detalhes
 </p>
 
-<h4 *ngIf="histories.length == 0" class="text-center no-entities">No Entities</h4>
+<h4 *ngIf="histories.length == 0" class="text-center no-entities">Sem histórico</h4>
 
 <div class="table-responsive mt-5" *ngIf="histories.length != 0">
   <table [dtTrigger]="dtTrigger" datatable class="table table-striped table-select-register">
     <thead>
       <tr>
-        <th># Revision</th>
-        <th>Modification Date</th>
-        <th>Revision Type</th>
-        <th>Description</th>
+        <th># Revisão</th>
+        <th>Data de Modificação</th>
+        <th>Tipo da Revisão</th>
+        <th>Descrição</th>
       </tr>
     </thead>
     <tbody>

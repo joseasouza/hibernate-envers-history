@@ -1,17 +1,17 @@
 
-<h3>Information of '{{selectedEntity}}' with id: {{idSelected}} at revision {{history.revision}}</h3>
+<h3>Informações da entidade '{{selectedEntity}}' com id: {{idSelected}} na revisão {{history.revision}}</h3>
 
 <p>
-  See below information about the selected history
+  Veja a seguir informações sobre o registro no histórico selecionado
 </p>
 
 <div class="row">
   <div class="col-md-12">
-      <b>Revision Type:</b> {{history.revisionType | revisionType}}
+      <b>Tipo da Revisão:</b> {{history.revisionType | revisionType}}
   </div>
 
   <div class="col-md-12">
-    <b>Modification Date: </b>{{history.date| date : "MM-dd-yyyy HH:mm:ss"}}
+    <b>Data de Modificação: </b>{{history.date| date : "dd/MM/yyyy HH:mm:ss"}}
   </div>
 </div>
 
@@ -27,7 +27,7 @@
 <div class="row mt-5">
   <back-button></back-button>
   <a href="javascript:void(0)" class="btn btn-danger ml-1" data-toggle="modal" data-target="#confirmModal">
-    <i class="fa fa-repeat"></i> Revert
+    <i class="fa fa-repeat"></i> Reverter
   </a>
 </div>
 
@@ -35,18 +35,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Confirm Revert</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>The record will be reverted to revision {{history.revision}}.
-          <br/>Do you want to continue?</p>
+        <p>O registro irá ser revertido para a revisão {{history.revision}}.
+          <br/>Deseja continuar?</p>
       </div>
       <div class="modal-footer">
-        <a href="javascript:void(0)" class="btn btn-secondary" data-dismiss="modal">Close</a>
-        <a href="javascript:void(0)" class="btn btn-primary" data-dismiss="modal" (click)="revert()">Confirm Revert</a>
+        <a href="javascript:void(0)" class="btn btn-secondary" data-dismiss="modal">Fechar</a>
+        <a href="javascript:void(0)" class="btn btn-primary" data-dismiss="modal" (click)="revert()">Confirmar</a>
       </div>
     </div>
   </div>

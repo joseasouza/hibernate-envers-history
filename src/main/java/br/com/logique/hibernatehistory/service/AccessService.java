@@ -50,13 +50,13 @@ public class AccessService {
 
             Message message = Message.builder().code(HttpServletResponse.SC_OK)
                     .code(HttpServletResponse.SC_OK)
-                    .message("Success!")
+                    .message("Sucesso!")
                     .build();
             response = Response.ok(new Gson().toJsonTree(message).toString()).build();
 
         } else {
             Message message = Message.builder().code(HttpServletResponse.SC_UNAUTHORIZED)
-                    .message("User or password doesn't matches")
+                    .message("Usuário ou senha incorretos")
                     .build();
             response = Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(new Gson().toJsonTree(message).toString()).build();
         }
@@ -71,7 +71,7 @@ public class AccessService {
     public Response logout() {
         doLogout();
         Message message = Message.builder().code(HttpServletResponse.SC_OK)
-                .message("Success!")
+                .message("Sucesso!")
                 .build();
 
         return Response.ok(new Gson().toJsonTree(message).toString()).build();

@@ -10,7 +10,7 @@ export class History {
 }
 
 export const RevisionType = {
-  0: "INSERT",
-  1: "EDIT",
-  2: "DELETE"
+  0: "INSERÇÃO",
+  1: "EDIÇÃO",
+  2: "EXCLUSÃO"
 }

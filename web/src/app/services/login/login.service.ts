@@ -35,7 +35,7 @@ export class LoginService {
         (data) => {
 
           this.loggedUserService.setLogged(false);
-          this.notifier.success("You have logout from Hibernate Envers History!", "Success!");
+          this.notifier.success("Você saiu com sucesso da auditoria", "Sucesso!");
           resolve(data);
         },
         error => this.errorHandler.handle(error))

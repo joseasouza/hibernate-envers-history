@@ -206,7 +206,7 @@ public class EntityService {
 
             manager.reverter(revertInformation.getName(), revertInformation.getId(), revertInformation.getRevision());
             response = Response.ok(new Gson().toJsonTree(Message.builder().code(HttpServletResponse.SC_OK)
-                    .message(String.format("Entity was succesfully reverted to revision %s!", revertInformation.getRevision().toString()))
+                    .message(String.format("A entidade foi revertida com sucesso para a revisão %s!", revertInformation.getRevision().toString()))
                     .build()).toString()).build();
 
         } catch (Exception e) {

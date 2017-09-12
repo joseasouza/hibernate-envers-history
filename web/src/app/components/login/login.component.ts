@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         switch (error.code) {
           case 500:
           case 401:
-            this.notifier.error(error.message, "Login failed!");
+            this.notifier.error(error.message, "Falha de Login!");
             break;
           default:
             this.errorHandler.handle(error);
