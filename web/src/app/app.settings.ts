@@ -8,7 +8,6 @@ export class AppSettings {
 
     let endpoint = "";
     let baseHref = document.getElementsByTagName('base')[0].href;
-    console.info("baseHref", baseHref);
 
     if (environment.production) {
        endpoint = baseHref;
