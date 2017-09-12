@@ -43,8 +43,8 @@ public class EntityService {
 
 //        return Response.ok(new Gson().toJsonTree(Arrays.asList(
 //
-//                Entity.builder().name("AnaliseAlarmesAnunciadosPorTempo").build(),
-//                Entity.builder().name("Dashboars").build()
+//                Entity.builder().name("AnaliseAlarmesAnunciadosPorTempo").displayName().build(),
+//                Entity.builder().name("Dashboars").displayName().build()
 //
 //        )).toString()).build();
     }

@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Register} from "../../../model/Register";
 import {EntityService} from "../../../services/model/entity.service";
 import {HttpErrorHandler} from "../../../services/http/httpErrorHandler.service";
 import {Subject} from "rxjs/Subject";
 import {DataTableDirective} from "angular-datatables";
+import {DataTablesLanguage} from "../../../model/datatablesPtBrLang";
 
 @Component({
   selector: 'app-list',
@@ -15,7 +16,7 @@ export class ListComponent implements OnInit {
 
   entitySelected = "No Entity Selected";
   registers: Register[] = [];
-
+  dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();
 
   @ViewChild(DataTableDirective)
@@ -27,6 +28,10 @@ export class ListComponent implements OnInit {
               private errorHandler : HttpErrorHandler) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      language : DataTablesLanguage
+    };
+
     this.router.params.subscribe((params: Params) => {
       let name = params['name'];
 

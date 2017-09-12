@@ -5,6 +5,7 @@ import {History} from "../../../model/history";
 import {HttpErrorHandler} from "../../../services/http/httpErrorHandler.service";
 import {Subject} from "rxjs/Subject";
 import {DataTableDirective} from "angular-datatables";
+import {DataTablesLanguage} from "../../../model/datatablesPtBrLang";
 
 @Component({
   selector: 'app-history-list',
@@ -18,6 +19,7 @@ export class HistoryListComponent implements OnInit {
   histories : History[] = [];
 
   dtTrigger = new Subject();
+  dtOptions = {};
 
   @ViewChild(DataTableDirective)
   private dtElement : DataTableDirective;
@@ -27,6 +29,9 @@ export class HistoryListComponent implements OnInit {
               private errorHandler : HttpErrorHandler) { }
 
   ngOnInit() {
+    this.dtOptions = {
+      language : DataTablesLanguage
+    };
     this.router.params.subscribe((params: Params) => {
       let id = params['id'];
       let name = params['name'];

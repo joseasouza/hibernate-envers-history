@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Params} from "@angular/router";
 import {EntityService} from "../../../services/model/entity.service";
 import {Register} from "../../../model/Register";
