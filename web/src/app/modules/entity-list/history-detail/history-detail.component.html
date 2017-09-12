@@ -13,6 +13,10 @@
   <div class="col-md-12">
     <b>Data de Modificação: </b>{{history.date| date : "dd/MM/yyyy HH:mm:ss"}}
   </div>
+
+  <div class="col-md-12">
+    <b>Author: </b>{{history.author}}
+  </div>
 </div>
 
 <div class="row" *ngIf="history.object != null">
