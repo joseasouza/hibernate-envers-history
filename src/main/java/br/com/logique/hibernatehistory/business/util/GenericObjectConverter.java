@@ -17,28 +17,29 @@ import java.util.TreeMap;
 
 /**
  * Remove referencias ciclicas contidas em um objeto.
- *
+ * 
  * @author victor
+ *
  */
 public class GenericObjectConverter {
+	
+
+	public static Map<String, Object> objectInfo(Object obj) {
+		Map<String, Object> info = new TreeMap<>();
+		List<Field> fields = ReflectionUtil.getAllFieldsFrom(obj.getClass());
 
 
-    public static Map<String, Object> objectInfo(Object obj) {
-        Map<String, Object> info = new TreeMap<>();
-        List<Field> fields = ReflectionUtil.getAllFieldsFrom(obj.getClass());
+		fields.stream().filter(f -> !Modifier.isStatic(f.getModifiers())).forEach(f -> {
+			try {
+				processarCampo(f, obj, info);
+			} catch (IllegalAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		});
 
 
-        fields.stream().filter(f -> !Modifier.isStatic(f.getModifiers())).forEach(f -> {
-            try {
-                processarCampo(f, obj, info);
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-
-        return info;
-    }
+		return info;
+	}
 
     private static void processarCampo(Field campo, Object objeto, Map<String, Object> info) throws IllegalAccessException {
         campo.setAccessible(true);
