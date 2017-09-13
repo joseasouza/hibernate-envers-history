@@ -7,6 +7,7 @@ import br.com.logique.hibernatehistory.dto.History;
 import br.com.logique.hibernatehistory.dto.Register;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
