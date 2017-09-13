@@ -56,10 +56,12 @@ public class AuditManager {
     public List<Entity> getNomesClassesAuditadas() {
         List<Entity> classes = new ArrayList<>();
         allClasses.stream().forEach(aClass -> {
-            EntityAudited entityAudited = aClass.getAnnotation(EntityAudited.class);
-            classes.add(Entity.builder().
-                    name(aClass.getSimpleName()).
-                    displayName(entityAudited.display()).build());
+            if (!Modifier.isAbstract(aClass.getModifiers())) {
+                EntityAudited entityAudited = aClass.getAnnotation(EntityAudited.class);
+                classes.add(Entity.builder().
+                        name(aClass.getSimpleName()).
+                        displayName(entityAudited.display()).build());
+            }
         });
         classes.sort(Comparator.comparing(Entity::getName));
         return classes;

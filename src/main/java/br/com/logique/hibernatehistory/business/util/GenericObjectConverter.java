@@ -2,6 +2,7 @@ package br.com.logique.hibernatehistory.business.util;
 
 import br.com.logique.hibernatehistory.anotacao.Columns;
 import br.com.logique.hibernatehistory.anotacao.EntityAudited;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 /**
@@ -47,15 +49,30 @@ public class GenericObjectConverter {
         Optional<Columns> colunaOptional = getColunasOptional(campo, entidadeAuditada);
 
         if (colunaOptional.isPresent()) {
-            displayColumn = colunaOptional.get().display();
+            displayColumn = getDisplay(campo.getDeclaringClass(), colunaOptional.get());
         }
         if (isColunaSemAnotacaoOuColunaComAnotacaoComAtributoParaExibir(colunaOptional)) {
             if (Iterable.class.isAssignableFrom(campo.getType())) {
                 info.put(displayColumn, processarObjetoIteravel((Iterable<Object>) campo.get(objeto)));
             } else {
-                info.put(displayColumn, Objects.toString(campo.get(objeto)));
+                if (!Modifier.isAbstract(campo.getType().getModifiers())) {
+                    info.put(displayColumn, Objects.toString(campo.get(objeto)));
+                }
             }
             campo.setAccessible(false);
+        }
+    }
+
+    private static String getDisplay(Class clazz, Columns atributo) {
+        String retorno = atributo.display();
+        try {
+            if (retorno.isEmpty()) {
+                retorno = atributo.attributeName();
+            }
+            ResourceBundle mybundle = ResourceBundle.getBundle("messages-auditoria");
+            return mybundle.getString(clazz.getSimpleName() + "." + retorno);
+        } catch (Exception e) {
+            return retorno;
         }
     }
 
@@ -81,16 +98,18 @@ public class GenericObjectConverter {
 
     private static List<Object> processarObjetoIteravel(Iterable<Object> obj) {
         List<Object> objects = new ArrayList<>();
-        Iterator iterator = obj.iterator();
+        if (obj != null) {
+            Iterator iterator = obj.iterator();
 
-        while (iterator.hasNext()) {
-            Object next = iterator.next();
-            if (next != null && Iterable.class.isAssignableFrom(next.getClass())) {
-                objects.add(processarObjetoIteravel((Iterable<Object>) next));
-            } else {
-                objects.add(Objects.toString(next));
+            while (iterator.hasNext()) {
+                Object next = iterator.next();
+                if (next != null && Iterable.class.isAssignableFrom(next.getClass())) {
+                    objects.add(processarObjetoIteravel((Iterable<Object>) next));
+                } else {
+                    objects.add(Objects.toString(next));
+                }
+
             }
-
         }
         return objects;
     }
