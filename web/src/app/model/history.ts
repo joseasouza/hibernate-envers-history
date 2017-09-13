@@ -6,6 +6,7 @@ export class History {
   revisionType : number = null;
   date : Date = null;
   description : String = "";
+  author : String = "";
   object : Object = null;
 }
 

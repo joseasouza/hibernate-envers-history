@@ -1,4 +1,4 @@
-package br.com.logique.hibernatehistory.anotacao;
+package br.com.logique.hibernatehistory.annotation;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
@@ -11,9 +11,8 @@ import java.lang.annotation.Target;
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface EntityAudited {
-
-    String display() default "";
+@Target(ElementType.FIELD)
+public @interface Author {
+    String attributeName() default "";
 }
 
