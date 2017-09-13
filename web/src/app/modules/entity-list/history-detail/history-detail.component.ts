@@ -43,7 +43,7 @@ export class HistoryDetailComponent implements OnInit {
   revert() {
 
     this.entityService.revertRecord(this.selectedEntity, this.idSelected, this.history.revision).then(value => {
-      this.notifier.success(value.message, "Success!");
+      this.notifier.success(value.message, "Sucesso!");
       this.location.back();
     }).catch(error => {
       this.errorHandler.handle(error);
