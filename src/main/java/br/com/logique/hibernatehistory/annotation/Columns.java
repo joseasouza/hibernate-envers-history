@@ -1,4 +1,4 @@
-package br.com.logique.hibernatehistory.anotacao;
+package br.com.logique.hibernatehistory.annotation;
 
 /**
  * Anotações responsável por personalizar as colunas que serão exibidas no detalhe da entidade na auditoria,

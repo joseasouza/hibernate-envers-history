@@ -12,6 +12,7 @@
         <th># Revision</th>
         <th>Modification Date</th>
         <th>Revision Type</th>
+        <th>Author</th>
         <th>Description</th>
       </tr>
     </thead>
@@ -20,6 +21,7 @@
       <td>{{history.revision}}</td>
       <td>{{history.date | date : "dd/MM/yyyy HH:mm:ss"}}</td>
       <td>{{history.revisionType | revisionType}}</td>
+      <td>{{history.author}}</td>
       <td>{{history.description}}</td>
     </tr>
     </tbody>
