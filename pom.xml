@@ -4,7 +4,7 @@
   <groupId>br.com.logique</groupId>
   <artifactId>hibernate-envers-history</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
 
   <properties>
     <skip.frontend.compile>false</skip.frontend.compile>
@@ -211,5 +211,18 @@
 
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>internal</id>
+      <name>Internal Release Repository</name>
+      <url>http://maven.logiquesistemas.com.br/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>Internal Snapshot Repository</name>
+      <url>http://maven.logiquesistemas.com.br/repository/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>
