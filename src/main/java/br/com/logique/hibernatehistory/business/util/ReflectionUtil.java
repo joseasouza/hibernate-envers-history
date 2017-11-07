@@ -3,6 +3,7 @@ package br.com.logique.hibernatehistory.business.util;
 import br.com.logique.hibernatehistory.exceptions.GenericHibernateHistoryException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -15,6 +16,8 @@ import java.util.List;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ReflectionUtil {
+
+    public static Reflections REFLECTIONS = new Reflections();
 
     /**
      * Get all Fields of the presented classType and its class types that are above its hierarchy

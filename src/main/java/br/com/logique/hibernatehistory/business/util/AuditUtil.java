@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RevisionEntity;
-import org.reflections.Reflections;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
@@ -22,8 +21,7 @@ import java.util.Set;
 public final class AuditUtil {
 
     public static String findAuthorAttribute() {
-        Reflections reflections = new Reflections();
-        return reflections.getTypesAnnotatedWith(RevisionEntity.class).stream()
+        return ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(RevisionEntity.class).stream()
                 .map(c -> ReflectionUtil.getAllFieldsAnnotedBy(c, Author.class).stream().findFirst().get().getName())
                 .findFirst().orElse(null);
     }
@@ -31,8 +29,7 @@ public final class AuditUtil {
     public static String getAuthorValue(Object obj) {
         String authorValue = "";
         if (obj != null) {
-            Reflections reflections = new Reflections();
-            authorValue = reflections.getTypesAnnotatedWith(RevisionEntity.class).stream().map(c ->
+            authorValue = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(RevisionEntity.class).stream().map(c ->
                     ReflectionUtil.getAllFieldsAnnotedBy(c, Author.class).stream()
                         .map(f -> {
                             String attributeName = f.getAnnotation(Author.class).attributeName();
@@ -52,9 +49,7 @@ public final class AuditUtil {
     }
 
     public static void incrementVersionAttributeIfPresent(Object entidade, EntityManager entityManager, Long id) {
-        Reflections reflections = new Reflections();
-
-        Set<Class<?>> allClasses = reflections.getTypesAnnotatedWith(Audited.class);
+        Set<Class<?>> allClasses = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(Audited.class);
         allClasses.forEach(aClass -> {
 
             if (aClass.getName().equals(entidade.getClass().getName())) {
