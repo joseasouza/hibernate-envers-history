@@ -1,11 +1,11 @@
 package br.com.logique.hibernatehistory.business;
 
 import br.com.logique.hibernatehistory.annotation.EntityAudited;
+import br.com.logique.hibernatehistory.business.util.ReflectionUtil;
 import br.com.logique.hibernatehistory.dao.AuditDao;
 import br.com.logique.hibernatehistory.dto.Entity;
 import br.com.logique.hibernatehistory.dto.History;
 import br.com.logique.hibernatehistory.dto.Register;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -21,11 +21,9 @@ public class AuditManager {
     Set<Class<?>> allClasses;
 
     private AuditDao auditoriaDao;
-    private Reflections reflections;
 
     public AuditManager() {
         this.auditoriaDao = new AuditDao();
-        reflections = new Reflections();
         setClassesAuditadas();
     }
 
@@ -73,7 +71,7 @@ public class AuditManager {
     }
 
     private void setClassesAuditadas() {
-        this.allClasses = this.reflections.getTypesAnnotatedWith(EntityAudited.class);
+        this.allClasses = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(EntityAudited.class);
     }
 
 }

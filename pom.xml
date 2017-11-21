@@ -1,227 +1,228 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>br.com.logique</groupId>
-    <artifactId>hibernate-envers-history</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.logique</groupId>
+  <artifactId>hibernate-envers-history</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.1-SNAPSHOT</version>
 
-    <properties>
-        <skip.frontend.compile>false</skip.frontend.compile>
-        <hibernate.version>4.3.11.Final</hibernate.version>
-        <weld.version>2.1.2.Final</weld.version>
-    </properties>
+  <properties>
+    <skip.frontend.compile>false</skip.frontend.compile>
+    <hibernate.version>4.3.11.Final</hibernate.version>
+    <weld.version>2.1.2.Final</weld.version>
+  </properties>
 
-    <dependencies>
+  <dependencies>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1</version>
-        </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.1</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.22.1</version>
-        </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet-core</artifactId>
+      <version>2.22.1</version>
+    </dependency>
 
-        <!-- client -->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.22.1</version>
-        </dependency>
+    <!-- client -->
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>2.22.1</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.22.1</version>
-        </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>2.22.1</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>2.22.1</version>
-        </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>2.22.1</version>
+    </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>RELEASE</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.10</version>
-        </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.10</version>
+    </dependency>
 
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.1</version>
-        </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.1</version>
+    </dependency>
 
-        <!-- Persistencia com JPA/Hibernate -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+    <!-- Persistencia com JPA/Hibernate -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
 
-        <!-- Hibernate Envers -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+    <!-- Hibernate Envers -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-envers</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
 
-        <!-- Processador de Anotações -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>LATEST</version>
-        </dependency>
+    <!-- Processador de Anotações -->
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>LATEST</version>
+    </dependency>
 
-        <!-- CDI / Implementacao Weld -->
-        <dependency>
-            <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-core-impl</artifactId>
-            <version>${weld.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    <!-- CDI / Implementacao Weld -->
+    <dependency>
+      <groupId>org.jboss.weld</groupId>
+      <artifactId>weld-core-impl</artifactId>
+      <version>${weld.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet-core</artifactId>
-            <version>${weld.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.jboss.weld.servlet</groupId>
+      <artifactId>weld-servlet-core</artifactId>
+      <version>${weld.version}</version>
+      <scope>provided</scope>
+    </dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
-            <version>1.7.12</version>
-        </dependency>
+    <!-- Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.12</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-ext</artifactId>
+      <version>1.7.12</version>
+    </dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
-        </dependency>
-
-
-    </dependencies>
-    <build>
-        <finalName>hibernate-envers-history</finalName>
-        <plugins>
-
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>ant-contrib</groupId>
-                        <artifactId>ant-contrib</artifactId>
-                        <version>20020829</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>1</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <tasks>
-                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-                                         classpathref="maven.plugin.classpath"/>
-                                <if>
-                                    <equals arg1="${skip.frontend.compile}" arg2="false"/>
-                                    <then>
-                                        <delete>
-                                            <fileset dir="${basedir}/src/main/resources/source">
-                                                <include name="**"/>
-                                                <exclude name="index.html"/>
-
-                                            </fileset>
-                                        </delete>
-                                        <exec dir="${basedir}/web/" executable="npm" os="Linux">
-                                            <arg line="install"/>
-                                        </exec>
-                                        <exec dir="${basedir}/web/" executable="ng" os="Linux">
-                                            <arg line="build --prod"/>
-                                        </exec>
-                                        <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
-                                            <arg line="/c npm install"/>
-                                        </exec>
-                                        <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
-                                            <arg line="/c ng build --prod"/>
-                                        </exec>
-
-                                        <copy todir="${basedir}/src/main/resources/source/">
-                                            <fileset dir="${basedir}/web/dist/">
-                                                <include name="**"/>
-                                            </fileset>
-                                        </copy>
-                                    </then>
-                                </if>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.1.3</version>
+    </dependency>
 
 
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
-        </plugins>
-    </build>
+  </dependencies>
+  <build>
+    <finalName>hibernate-envers-history</finalName>
+    <plugins>
 
-    <distributionManagement>
-        <repository>
-            <id>internal</id>
-            <name>Internal Release Repository</name>
-            <url>http://maven.logiquesistemas.com.br/repository/internal/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Internal Snapshot Repository</name>
-            <url>http://maven.logiquesistemas.com.br/repository/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.4.3</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>20020829</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>1</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                         classpathref="maven.plugin.classpath" />
+                <if>
+                  <equals arg1="${skip.frontend.compile}" arg2="false" />
+                  <then>
+                    <delete>
+                      <fileset dir="${basedir}/src/main/resources/source" >
+                        <include name="**"/>
+                        <exclude name="index.html"/>
+
+                      </fileset>
+                    </delete>
+                    <exec dir="${basedir}/web/" executable="npm" os="Linux">
+                      <arg line="install"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="ng" os="Linux">
+                      <arg line="build --prod"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
+                      <arg line="/c npm install"/>
+                    </exec>
+                    <exec dir="${basedir}/web/" executable="cmd.exe" osFamily="Windows">
+                      <arg line="/c ng build --prod"/>
+                    </exec>
+
+                    <copy todir="${basedir}/src/main/resources/source/">
+                      <fileset dir="${basedir}/web/dist/">
+                        <include name="**" />
+                      </fileset>
+                    </copy>
+                  </then>
+                </if>
+
+
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>internal</id>
+      <name>Internal Release Repository</name>
+      <url>http://maven.logiquesistemas.com.br/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>Internal Snapshot Repository</name>
+      <url>http://maven.logiquesistemas.com.br/repository/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>
