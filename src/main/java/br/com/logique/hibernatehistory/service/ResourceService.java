@@ -12,6 +12,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
@@ -32,13 +34,9 @@ public class ResourceService {
         Response response;
         try {
 
-            File fileRequested = getFileFromResources(filename);
 
-            if (!fileRequested.isFile()) {
-                throw new NotFoundException();
-            }
-
-            response = Response.ok(fileRequested).build();
+            InputStreamReader inputStreamReader = getFileFromResources(filename);
+            response = Response.ok(inputStreamReader).build();
         } catch (NotFoundException ex) {
             response = Response.temporaryRedirect(UriBuilder.fromPath(getIndexUrl(request)).build("")).build();
         }
@@ -50,13 +48,15 @@ public class ResourceService {
         return request.getRequestURI().split(request.getServletPath())[0] + request.getServletPath();
     }
 
-    private File getFileFromResources(String filename) {
+    private InputStreamReader getFileFromResources(String filename) {
 
-        URL resource = getClass().getClassLoader().getResource("source/" + filename);
-        if (resource == null) {
+        InputStream inputStream = getClass().getResourceAsStream("/source/" + filename);
+
+        if (inputStream == null) {
             throw new NotFoundException();
+        } else {
+            return new InputStreamReader(inputStream);
         }
-        return new File(resource.getFile());
     }
 
 }

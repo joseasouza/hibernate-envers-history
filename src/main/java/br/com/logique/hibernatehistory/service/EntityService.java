@@ -1,6 +1,7 @@
 package br.com.logique.hibernatehistory.service;
 
 import br.com.logique.hibernatehistory.business.AuditManager;
+import br.com.logique.hibernatehistory.business.util.PropertiesUtil;
 import br.com.logique.hibernatehistory.dto.History;
 import br.com.logique.hibernatehistory.dto.Message;
 import br.com.logique.hibernatehistory.dto.Register;
@@ -15,9 +16,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author victor.
@@ -26,10 +30,17 @@ import java.util.List;
 @Slf4j
 public class EntityService {
 
+
     private AuditManager manager;
 
-    public EntityService() {
-        this.manager = new AuditManager();
+
+    public EntityService(@Context Configuration configuration) {
+        String packageScan = Optional.ofNullable((String) configuration.getProperty("hibernate.envers.package.scan"))
+                .orElse("br.com.logique");
+        String typeAplication = Optional.ofNullable((String) configuration.getProperty("hibernate.envers.type.aplication"))
+                .orElse("cdi");
+        PropertiesUtil.getInstance().setTypeAplication(typeAplication);
+        this.manager = new AuditManager(packageScan);
     }
 
     @GET

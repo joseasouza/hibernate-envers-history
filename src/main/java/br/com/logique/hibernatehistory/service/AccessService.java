@@ -32,7 +32,6 @@ public class AccessService {
     @Context
     private HttpServletRequest httpRequest;
 
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

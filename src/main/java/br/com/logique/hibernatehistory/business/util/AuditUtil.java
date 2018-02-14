@@ -21,22 +21,22 @@ import java.util.Set;
 public final class AuditUtil {
 
     public static String findAuthorAttribute() {
-        return ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(RevisionEntity.class).stream()
-                .map(c -> ReflectionUtil.getAllFieldsAnnotedBy(c, Author.class).stream().findFirst().get().getName())
+        return ReflectionUtil.getInstance().getReflections().getTypesAnnotatedWith(RevisionEntity.class).stream()
+                .map(c -> ReflectionUtil.getInstance().getAllFieldsAnnotedBy(c, Author.class).stream().findFirst().get().getName())
                 .findFirst().orElse(null);
     }
 
     public static String getAuthorValue(Object obj) {
         String authorValue = "";
         if (obj != null) {
-            authorValue = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(RevisionEntity.class).stream().map(c ->
-                    ReflectionUtil.getAllFieldsAnnotedBy(c, Author.class).stream()
+            authorValue = ReflectionUtil.getInstance().getReflections().getTypesAnnotatedWith(RevisionEntity.class).stream().map(c ->
+                    ReflectionUtil.getInstance().getAllFieldsAnnotedBy(c, Author.class).stream()
                         .map(f -> {
                             String attributeName = f.getAnnotation(Author.class).attributeName();
                             if ("".equals(attributeName)) {
                                 return Objects.toString(obj.toString());
                             } else {
-                                return Objects.toString(ReflectionUtil.getFieldValueByName(attributeName, obj));
+                                return Objects.toString(ReflectionUtil.getInstance().getFieldValueByName(attributeName, obj));
                             }
                         }).findFirst().orElse("")).findFirst().orElse("");
         }
@@ -44,24 +44,24 @@ public final class AuditUtil {
     }
 
     public static Long findRecordId(Object obj) {
-        return ReflectionUtil.getAllFieldsAnnotedBy(obj.getClass(), Id.class).stream()
-                .map(field -> (Long) ReflectionUtil.getFieldValue(field, obj)).findFirst().orElse(null);
+        return ReflectionUtil.getInstance().getAllFieldsAnnotedBy(obj.getClass(), Id.class).stream()
+                .map(field -> (Long) ReflectionUtil.getInstance().getFieldValue(field, obj)).findFirst().orElse(null);
     }
 
     public static void incrementVersionAttributeIfPresent(Object entidade, EntityManager entityManager, Long id) {
-        Set<Class<?>> allClasses = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(Audited.class);
+        Set<Class<?>> allClasses = ReflectionUtil.getInstance().getReflections().getTypesAnnotatedWith(Audited.class);
         allClasses.forEach(aClass -> {
 
             if (aClass.getName().equals(entidade.getClass().getName())) {
 
-                List<Field> fields = ReflectionUtil.getAllFieldsAnnotedBy(entidade.getClass(), Version.class);
+                List<Field> fields = ReflectionUtil.getInstance().getAllFieldsAnnotedBy(entidade.getClass(), Version.class);
 
                 if (fields != null && fields.size() > 0) {
 
                     Object obj = entityManager.find(entidade.getClass(), id);
                     fields.forEach(field -> {
-                        long versao = (long) ReflectionUtil.getFieldValue(field, obj);
-                        ReflectionUtil.setFieldValue(field, entidade, versao);
+                        long versao = (long) ReflectionUtil.getInstance().getFieldValue(field, obj);
+                        ReflectionUtil.getInstance().setFieldValue(field, entidade, versao);
                     });
 
                 }

@@ -12,9 +12,9 @@ import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 
-import javax.enterprise.inject.spi.CDI;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,11 +22,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by italo.alan on 01/09/2017.
+ * Created by Joilson on 14/02/2018.
  */
 @Slf4j
-public class AuditDao {
+public abstract class AbstractAuditDao {
 
+
+    @Transactional
     public Object findEntityAtRevision(Class<Object> clazz, Long id, Long revision) {
         AuditReader reader = AuditReaderFactory.get(getEntityManager());
         Object entity;
@@ -39,6 +41,7 @@ public class AuditDao {
         return entity;
     }
 
+    @Transactional
     public History findRevisionById(Class<Object> clazz, Long id, Long revisao) {
         AuditReader reader = AuditReaderFactory.get(getEntityManager());
         Object[] objectColunas;
@@ -66,6 +69,7 @@ public class AuditDao {
         return history;
     }
 
+    @Transactional
     public Register findById(Class classType, Long id) {
         Object o = getEntityManager().find(classType, id);
         Register register = null;
@@ -75,6 +79,7 @@ public class AuditDao {
         return register;
     }
 
+    @Transactional
     public List<History> listRevisionsByEntityId(Class<Object> clazz, Long id) {
         AuditReader reader = AuditReaderFactory.get(getEntityManager());
 
@@ -102,6 +107,7 @@ public class AuditDao {
         return retorno;
     }
 
+    @Transactional
     public List<Register> all(Class<Object> clazz) {
 
         Query query = getEntityManager().createQuery("from " + clazz.getName());
@@ -173,10 +179,5 @@ public class AuditDao {
         return author;
     }
 
-    private EntityManager getEntityManager() {
-        return CDI.current().select(EntityManager.class).get();
-    }
-
-
-
+    public abstract EntityManager getEntityManager();
 }

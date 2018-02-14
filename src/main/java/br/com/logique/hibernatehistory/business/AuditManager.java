@@ -1,8 +1,12 @@
 package br.com.logique.hibernatehistory.business;
 
 import br.com.logique.hibernatehistory.annotation.EntityAudited;
+import br.com.logique.hibernatehistory.business.util.PropertiesUtil;
 import br.com.logique.hibernatehistory.business.util.ReflectionUtil;
-import br.com.logique.hibernatehistory.dao.AuditDao;
+import br.com.logique.hibernatehistory.dao.AbstractAuditDao;
+import br.com.logique.hibernatehistory.dao.ApplicationContextProvider;
+import br.com.logique.hibernatehistory.dao.AuditCDIDao;
+import br.com.logique.hibernatehistory.dao.AuditSpringDao;
 import br.com.logique.hibernatehistory.dto.Entity;
 import br.com.logique.hibernatehistory.dto.History;
 import br.com.logique.hibernatehistory.dto.Register;
@@ -20,11 +24,15 @@ public class AuditManager {
 
     Set<Class<?>> allClasses;
 
-    private AuditDao auditoriaDao;
+    private AbstractAuditDao auditoriaDao;
 
-    public AuditManager() {
-        this.auditoriaDao = new AuditDao();
-        setClassesAuditadas();
+    public AuditManager(String packageScan) {
+        if (PropertiesUtil.getInstance().isSpring()) {
+            this.auditoriaDao = ApplicationContextProvider.getApplicationContext().getBean(AuditSpringDao.class);
+        } else {
+            this.auditoriaDao = new AuditCDIDao();
+        }
+        setClassesAuditadas(packageScan);
     }
 
     public List<History> listarRevisoesDaEntidade(String clazz, Long id) throws ClassNotFoundException {
@@ -70,8 +78,8 @@ public class AuditManager {
         return this.allClasses.stream().filter(cls -> cls.getSimpleName().equals(nameClass)).findFirst().orElseThrow(ClassNotFoundException::new);
     }
 
-    private void setClassesAuditadas() {
-        this.allClasses = ReflectionUtil.REFLECTIONS.getTypesAnnotatedWith(EntityAudited.class);
+    private void setClassesAuditadas(String packageScan) {
+        this.allClasses = ReflectionUtil.iniciaInstancia(packageScan).getReflections().getTypesAnnotatedWith(EntityAudited.class);
     }
 
 }

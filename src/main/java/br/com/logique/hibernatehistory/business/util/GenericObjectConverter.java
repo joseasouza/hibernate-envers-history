@@ -26,7 +26,7 @@ public class GenericObjectConverter {
 
 	public static Map<String, Object> objectInfo(Object obj) {
 		Map<String, Object> info = new TreeMap<>();
-		List<Field> fields = ReflectionUtil.getAllFieldsFrom(obj.getClass());
+		List<Field> fields = ReflectionUtil.getInstance().getAllFieldsFrom(obj.getClass());
 
 
 		fields.stream().filter(f -> !Modifier.isStatic(f.getModifiers())).forEach(f -> {

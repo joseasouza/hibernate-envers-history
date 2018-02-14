@@ -17,14 +17,32 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ReflectionUtil {
 
-    public static Reflections REFLECTIONS = new Reflections();
+    private static ReflectionUtil reflectionUtil;
+
+    private Reflections reflections;
+
+    public static ReflectionUtil getInstance(){
+        if(reflectionUtil == null){
+            reflectionUtil = new ReflectionUtil();
+        }
+        return reflectionUtil;
+    }
+
+    public static ReflectionUtil iniciaInstancia(String packageScan){
+        if(reflectionUtil == null){
+            reflectionUtil = new ReflectionUtil();
+            reflectionUtil.reflections = new Reflections(packageScan);
+        }
+        return reflectionUtil;
+    }
+
 
     /**
      * Get all Fields of the presented classType and its class types that are above its hierarchy
      * @param classType classType type of class
      * @return returns the list of filtered fields
      */
-    public static List<Field> getAllFieldsFrom(Class<?> classType) {
+    public List<Field> getAllFieldsFrom(Class<?> classType) {
         List<Field> fields = new ArrayList<>();
         fields.addAll(Arrays.asList(classType.getDeclaredFields()));
 
@@ -41,7 +59,7 @@ public final class ReflectionUtil {
      * @param annotation annotation that will be used to filter the fields
      * @return returns the list of filtered fields
      */
-    public static List<Field> getAllFieldsAnnotedBy(Class<?> classType, Class<? extends Annotation> annotation) {
+    public List<Field> getAllFieldsAnnotedBy(Class<?> classType, Class<? extends Annotation> annotation) {
         List<Field> allFields = getAllFieldsFrom(classType);
         List<Field> filteredFields = new ArrayList<>();
         allFields.stream().filter(field -> field.isAnnotationPresent(annotation)).forEach(field -> {
@@ -57,7 +75,7 @@ public final class ReflectionUtil {
      * @param value value of the object
      * @throws GenericHibernateHistoryException throws if an illegal access occurs
      */
-    public static void setFieldValue(Field field, Object o, Object value) throws GenericHibernateHistoryException {
+    public void setFieldValue(Field field, Object o, Object value) throws GenericHibernateHistoryException {
 
         field.setAccessible(true);
         try {
@@ -75,7 +93,7 @@ public final class ReflectionUtil {
      * @return returns the value of the field
      * @throws GenericHibernateHistoryException throws if an illegal access occurs
      */
-    public static Object getFieldValue(Field field, Object o) throws GenericHibernateHistoryException {
+    public Object getFieldValue(Field field, Object o) throws GenericHibernateHistoryException {
 
         field.setAccessible(true);
         Object value;
@@ -94,7 +112,7 @@ public final class ReflectionUtil {
      * @param o object
      * @return returns the value
      */
-    public static Object getFieldValueByName(String name, Object o) {
+    public Object getFieldValueByName(String name, Object o) {
         try {
             Field field = o.getClass().getDeclaredField(name);
             return getFieldValue(field, o);
@@ -103,4 +121,7 @@ public final class ReflectionUtil {
         }
     }
 
+    public Reflections getReflections() {
+        return reflections;
+    }
 }

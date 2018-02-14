@@ -4,7 +4,7 @@
   <groupId>br.com.logique</groupId>
   <artifactId>hibernate-envers-history</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
 
   <properties>
     <skip.frontend.compile>false</skip.frontend.compile>
@@ -99,6 +99,14 @@
       <version>${weld.version}</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.0.3.RELEASE</version>
+      <scope>provided</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.jboss.weld.servlet</groupId>
