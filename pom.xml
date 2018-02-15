@@ -183,6 +183,7 @@
                       <fileset dir="${basedir}/src/main/resources/source" >
                         <include name="**"/>
                         <exclude name="index.html"/>
+                        <exclude name="empty"/>
 
                       </fileset>
                     </delete>
